@@ -43,7 +43,7 @@ To get setup be sure you have docker installed.
 
 1. Develop your hook.
 1. Unit test your hook.
-1. Run `bin/deploy-hooks.js` to deploy the hook to the XRPL Labs Testnet.
+1. Run `bin/deploy-hook.js` to deploy the hook to the XRPL Labs Testnet.
 1. Integration test your hook.
 1. Enjoy.
 
