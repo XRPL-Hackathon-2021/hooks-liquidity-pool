@@ -1,0 +1,39 @@
+{
+  "name": "hooks-liquidity-pool",
+  "version": "1.0.0",
+  "description": "XRP Ledger Hook that add liquidity pool and automated market making functionality to an account.",
+  "main": "index.js",
+  "bin": {
+    "hooks-liquidity-pool": "deploy-hook.js"
+  },
+  "scripts": {
+    "test": "node tests",
+    "asbuild:untouched": "asc assembly/index.ts --target debug",
+    "asbuild:optimized": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XRPL-Hackathon-2021/hooks-liquidity-pool.git"
+  },
+  "keywords": [
+    "XRPL",
+    "Liquidity",
+    "Pool",
+    "Automated",
+    "Market",
+    "Making"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/XRPL-Hackathon-2021/hooks-liquidity-pool/issues"
+  },
+  "homepage": "https://github.com/XRPL-Hackathon-2021/hooks-liquidity-pool#readme",
+  "dependencies": {
+    "@assemblyscript/loader": "^0.19.16"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.19.16"
+  }
+}
