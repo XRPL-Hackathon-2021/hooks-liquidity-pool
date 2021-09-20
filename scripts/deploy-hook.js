@@ -45,12 +45,13 @@ api
         HookOn: '0000000000000000'
     };
     console.log("Raw Paylaod: " + JSON.stringify(payload) + " \n");
-    api.prepareTransaction(payload).then(function (preparedTransaction) {
+    api.prepareTransaction(payload).then(function (transaction) {
         console.log('Prepared Transaction: ');
-        console.log(preparedTransaction);
+        console.log(transaction);
         console.log('Signing Prepared Transaction: \n');
-        var result = api.sign(preparedTransaction.txJSON, secret);
-        console.log('Did we get a result that is signed? \n');
+        // TODO: Something is failing here.
+        var result = api.sign(transaction.txJSON, secret);
+        console.log('DEBUG: Did we get a result that is signed? \n');
         var signedTransaction = result.signedTransaction;
         console.log("Signed Transaction: " + signedTransaction);
         api

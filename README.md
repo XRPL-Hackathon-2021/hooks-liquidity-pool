@@ -23,7 +23,7 @@ To get setup be sure you have docker installed.
 1. Start the container.
 
    ```
-   docker run -p 127.0.0.1:6005:6005/tcp -d --name xrpld-hooks xrpllabsofficial/xrpld-hooks-testnet
+   docker run -p 127.0.0.1:6005:6005/tcp -p 127.0.0.1:5005:5005/tcp -d --name xrpld-hooks xrpllabsofficial/xrpld-hooks-testnet
    ```
 
 1. Open a shell on the container to execute commands on.
