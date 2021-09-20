@@ -15,7 +15,7 @@ var port = process.env.XRPL_PORT;
 var api = new ripple_lib_1.RippleAPI({ server: "ws://" + host + ":" + port + "/" });
 var address = process.env.XRP_ADDRESS;
 var secret = process.env.XRP_SECRET;
-// Guard against all the possible failures before we do anything.
+// Guard against initialization failures.
 if (!api)
     throw Error('Is your XRPL server running? Or its config incorrect.');
 if (!address)
@@ -44,7 +44,7 @@ api
         CreateCode: binary,
         HookOn: '0000000000000000'
     };
-    console.log("Raw Paylaod: " + JSON.stringify(payload) + " \n");
+    console.log("Transaction Paylaod: " + JSON.stringify(payload) + " \n");
     api.prepareTransaction(payload).then(function (transaction) {
         console.log('Prepared Transaction: ');
         console.log(transaction);

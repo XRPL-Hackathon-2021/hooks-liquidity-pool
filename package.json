@@ -12,7 +12,7 @@
     "asbuild:optimized": "asc assembly/index.ts --target release",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
     "predeploy": "tsc scripts/deploy-hook.ts",
-    "deploy": "node scripts/deploy-hooks.js"
+    "deploy": "node scripts/deploy-hook.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/node": "^16.9.4",
     "assemblyscript": "^0.19.16",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "ripple-lib": "^1.10.0"
   }
 }

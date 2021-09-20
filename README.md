@@ -13,6 +13,8 @@ To get setup be sure you have docker installed.
 
 **_Note:_** If these instructions are not enough submit an issue to this repo for more clarification also links to additional documentation is at the bottom of this README.
 
+1. After cloning this repo be sure to run `npm install` from the root of this repo on your local development machine.
+1. <a href="https://www.typescriptlang.org/download" target="_blank">Install typescript</a>.
 1. <a href="https://docs.docker.com/get-docker/" target="_blank">Install docker</a> and confirm it's running.
 1. Pull the docker image that has XRPL Hooks setup within it.
 
