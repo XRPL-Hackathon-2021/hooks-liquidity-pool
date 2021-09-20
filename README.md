@@ -20,6 +20,12 @@ To get setup be sure you have docker installed.
    docker pull xrpllabsofficial/xrpld-hooks-testnet
    ```
 
+1. Start the container.
+
+   ```
+   docker run -d --name xrpld-hooks xrpllabsofficial/xrpld-hooks-testnet
+   ```
+
 1. Open a shell on the container to execute commands on.
 
    ```
@@ -45,6 +51,7 @@ To get setup be sure you have docker installed.
    ```
 
 1. Develop your hook.
+1. Run `npm run asbuild` to compile your hook.
 1. Unit test your hook.
 1. Run `bin/deploy-hook.js` to deploy the hook to the XRPL Labs Testnet.
 1. Integration test your hook.
