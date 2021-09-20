@@ -25,7 +25,7 @@ api.on('error', (errorCode, errorMessage) => {
   console.log(errorCode + ': ' + errorMessage)
 })
 api.on('connected', () => {
-  console.log('connected')
+  console.log('Connected to XRPLD Server.\n')
 })
 api.on('disconnected', (code) => {
   console.log('disconnected, code:', code)
@@ -38,22 +38,33 @@ api
       .toString('hex')
       .toUpperCase()
 
-    const payload: TransactionJSON = {
+    const payload = {
       Account: address,
       TransactionType: 'SetHook',
       CreateCode: binary,
       HookOn: '0000000000000000'
     }
 
-    api.prepareTransaction(payload).then((preparedTransaction) => {
-      const signedTransaction = api.sign(
-        preparedTransaction.txJSON,
-        secret
-      ).signedTransaction
+    console.log(`Raw Paylaod: ${JSON.stringify(payload)} \n`)
+
+    api.prepareTransaction(payload).then((transaction) => {
+      console.log('Prepared Transaction: ')
+      console.log(transaction)
+
+      console.log('Signing Prepared Transaction: \n')
+
+      // TODO: Something is failing here.
+      const result = api.sign(transaction.txJSON, secret)
+      console.log('DEBUG: Did we get a result that is signed? \n')
+
+      const signedTransaction = result.signedTransaction
+
+      console.log(`Signed Transaction: ${signedTransaction}`)
 
       api
         .submit(signedTransaction)
         .then((response) => {
+          console.log(`Response from XRPLD:`)
           console.log(response.resultCode, response.resultMessage)
           process.exit(0)
         })
