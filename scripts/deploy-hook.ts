@@ -34,7 +34,7 @@ api
   .connect()
   .then(() => {
     const binary = fs
-      .readFileSync('../build/optimized.wasm')
+      .readFileSync('./build/optimized.wasm')
       .toString('hex')
       .toUpperCase()
 

@@ -35,7 +35,7 @@ api
     .connect()
     .then(function () {
     var binary = fs
-        .readFileSync('../build/optimized.wasm')
+        .readFileSync('./build/optimized.wasm')
         .toString('hex')
         .toUpperCase();
     var payload = {
