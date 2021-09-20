@@ -13,7 +13,7 @@ dotenv.config()
 const host = process.env.XRPL_HOST
 const port = process.env.XRPL_PORT
 const api = new RippleAPI({ server: `ws://${host}:${port}/` })
-const address = process.env.XRP_ACCOUNT
+const address = process.env.XRP_ADDRESS
 const secret = process.env.XRP_SECRET
 
 // Guard against all the possible failures before we do anything.
