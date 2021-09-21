@@ -6,7 +6,7 @@
 */
 import * as dotenv from 'dotenv'
 // import { RippleAPI, TransactionJSON } from 'ripple-lib'
-import { XrplClient } from 'xrpl-client'
+import { XrplClient, AnyJson } from 'xrpl-client'
 import * as fs from 'fs'
 
 dotenv.config()
@@ -29,21 +29,44 @@ const binary = fs
   .toUpperCase()
 
 const payload = {
-  Account: 'address',
+  Account: address,
   TransactionType: 'SetHook',
   CreateCode: binary,
   HookOn: '0000000000000000'
 }
 
+const signTransaction = async (payload: AnyJson): Promise<AnyJson> => {
+  // Construct a signing request that includes the payload.
+  const request = {
+    id: 'hackathon',
+    command: 'sign',
+    tx_json: payload,
+    secret: secret
+  }
+
+  console.log('Signing hook deployment request.')
+  const result = await client.send(request)
+  console.log(result) // Uncomment to see the signing response.
+
+  return result
+}
+
 const main = async (): Promise<void> => {
-  let request = {
+  // Get the payload signed by the XRPL.
+  const signedTransaction = await signTransaction(payload)
+
+  // Construct new request that includes the signed payload.
+  const request = {
     id: 'hackathon',
     command: 'tx',
-    transaction: JSON.stringify(payload),
+    transaction: signedTransaction,
     binary: false
   }
+
+  console.log('Deploying hook to the XRPL.')
   const result = await client.send(request)
-  console.log(result)
+  console.log(result) // Uncomment to see the deployment response.
+
   process.exit(1)
 }
 

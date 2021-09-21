@@ -65,26 +65,51 @@ var binary = fs
     .toString('hex')
     .toUpperCase();
 var payload = {
-    Account: 'address',
+    Account: address,
     TransactionType: 'SetHook',
     CreateCode: binary,
     HookOn: '0000000000000000'
 };
-var main = function () { return __awaiter(void 0, void 0, void 0, function () {
+var signTransaction = function (payload) { return __awaiter(void 0, void 0, void 0, function () {
     var request, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 request = {
                     id: 'hackathon',
-                    command: 'tx',
-                    transaction: JSON.stringify(payload),
-                    binary: false
+                    command: 'sign',
+                    tx_json: payload,
+                    secret: secret
                 };
+                console.log('Signing hook deployment request.');
                 return [4 /*yield*/, client.send(request)];
             case 1:
                 result = _a.sent();
-                console.log(result);
+                console.log(result); // Uncomment to see the signing response.
+                return [2 /*return*/, result];
+        }
+    });
+}); };
+var main = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var signedTransaction, request, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, signTransaction(payload)
+                // Construct new request that includes the signed payload.
+            ];
+            case 1:
+                signedTransaction = _a.sent();
+                request = {
+                    id: 'hackathon',
+                    command: 'tx',
+                    transaction: signedTransaction,
+                    binary: false
+                };
+                console.log('Deploying hook to the XRPL.');
+                return [4 /*yield*/, client.send(request)];
+            case 2:
+                result = _a.sent();
+                console.log(result); // Uncomment to see the deployment response.
                 process.exit(1);
                 return [2 /*return*/];
         }
