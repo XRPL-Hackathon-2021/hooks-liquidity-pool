@@ -51,6 +51,7 @@ const signTransaction = async (payload: AnyJson): Promise<AnyJson> => {
 
   console.log('Signing hook deployment request.')
   const result = await client.send(request)
+  console.log(`Signed transaction returned from XRPL: `)
   console.log(result) // Uncomment to see the signing response.
 
   return result
@@ -69,8 +70,8 @@ const main = async (): Promise<void> => {
 
   console.log('Deploying hook to the XRPL.')
   const result = await client.send(request)
+  console.log(`Deployment submission result returned from XRPL: `)
   console.log(result) // Uncomment to see the deployment response.
-  // console.log(result.request.transaction.tx_json) // Uncomment to see the transaction returned from the XRPL.
 
   process.exit(1)
 }

@@ -90,6 +90,7 @@ var signTransaction = function (payload) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, client.send(request)];
             case 1:
                 result = _a.sent();
+                console.log("Signed transaction returned from XRPL: ");
                 console.log(result); // Uncomment to see the signing response.
                 return [2 /*return*/, result];
         }
@@ -113,8 +114,8 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 return [4 /*yield*/, client.send(request)];
             case 2:
                 result = _a.sent();
+                console.log("Deployment submission result returned from XRPL: ");
                 console.log(result); // Uncomment to see the deployment response.
-                // console.log(result.request.transaction.tx_json) // Uncomment to see the transaction returned from the XRPL.
                 process.exit(1);
                 return [2 /*return*/];
         }
