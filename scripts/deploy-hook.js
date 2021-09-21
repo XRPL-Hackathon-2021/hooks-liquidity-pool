@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.main = void 0;
 /*
   This is a placeholder Javascript file.
   It's purpose is to use RippleLib to install hooks on the testnet.
@@ -56,7 +55,7 @@ var secret = process.env.XRP_SECRET;
 var client = new xrpl_client_1.XrplClient(["ws://" + host + ":" + port + "/"]);
 // Guard against initialization failures.
 if (!client)
-    throw Error('Is your XRPL server running? Or its config incorrect.');
+    throw Error('Is your XRPL server running? Its config incorrect?');
 if (!address)
     throw Error('XRP_ACCOUNT environment variable must be set.');
 if (!secret)
@@ -71,25 +70,23 @@ var payload = {
     CreateCode: binary,
     HookOn: '0000000000000000'
 };
-function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        var request, result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    request = {
-                        'id': 'hackathon',
-                        'command': 'tx',
-                        'transaction': JSON.stringify(payload),
-                        'binary': false
-                    };
-                    return [4 /*yield*/, client.send(request)];
-                case 1:
-                    result = _a.sent();
-                    console.log(result);
-                    return [2 /*return*/];
-            }
-        });
+var main = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var request, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                request = {
+                    id: 'hackathon',
+                    command: 'tx',
+                    transaction: JSON.stringify(payload),
+                    binary: false
+                };
+                return [4 /*yield*/, client.send(request)];
+            case 1:
+                result = _a.sent();
+                console.log(result);
+                return [2 /*return*/];
+        }
     });
-}
-exports.main = main;
+}); };
+main();

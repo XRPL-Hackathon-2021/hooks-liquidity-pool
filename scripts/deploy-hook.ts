@@ -19,10 +19,9 @@ const secret = process.env.XRP_SECRET
 const client = new XrplClient([`ws://${host}:${port}/`])
 
 // Guard against initialization failures.
-if (!client) throw Error('Is your XRPL server running? Or its config incorrect.')
+if (!client) throw Error('Is your XRPL server running? Its config incorrect?')
 if (!address) throw Error('XRP_ACCOUNT environment variable must be set.')
 if (!secret) throw Error('XRP_SECRET environment variable must be set.')
-
 
 const binary = fs
   .readFileSync('./build/optimized.wasm')
@@ -36,14 +35,15 @@ const payload = {
   HookOn: '0000000000000000'
 }
 
-
-export async function main() {
+const main = async (): Promise<void> => {
   let request = {
-    'id': 'hackathon',
-    'command': 'tx',
-    'transaction': JSON.stringify(payload),
-    'binary': false
+    id: 'hackathon',
+    command: 'tx',
+    transaction: JSON.stringify(payload),
+    binary: false
   }
   const result = await client.send(request)
   console.log(result)
 }
+
+main()
