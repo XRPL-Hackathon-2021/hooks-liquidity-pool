@@ -70,6 +70,11 @@ var payload = {
     CreateCode: binary,
     HookOn: '0000000000000000'
 };
+/*
+  Caution here: You would never send your secret to an XRPL serer in production.
+  This is only needed for the hackathon. The current versions of the
+  XRPL client libs don't support a SetHook transaction type.
+  */
 var signTransaction = function (payload) { return __awaiter(void 0, void 0, void 0, function () {
     var request, result;
     return __generator(this, function (_a) {
@@ -101,15 +106,15 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                 signedTransaction = _a.sent();
                 request = {
                     id: 'hackathon',
-                    command: 'tx',
-                    transaction: signedTransaction,
-                    binary: false
+                    command: 'submit',
+                    tx_blob: signedTransaction.tx_blob
                 };
                 console.log('Deploying hook to the XRPL.');
                 return [4 /*yield*/, client.send(request)];
             case 2:
                 result = _a.sent();
                 console.log(result); // Uncomment to see the deployment response.
+                // console.log(result.request.transaction.tx_json) // Uncomment to see the transaction returned from the XRPL.
                 process.exit(1);
                 return [2 /*return*/];
         }
