@@ -18,7 +18,7 @@ const secret = process.env.XRP_SECRET
 
 // Guard against initialization failures.
 if (!api) throw Error('Is your XRPL server running? Or its config incorrect.')
-if (!address) throw Error('XRP_ACCOUNT environment variable must be set.')
+if (!address) throw Error('XRP_ADDRESS environment variable must be set.')
 if (!secret) throw Error('XRP_SECRET environment variable must be set.')
 
 api.on('error', (errorCode, errorMessage) => {
@@ -38,7 +38,7 @@ api
       .toString('hex')
       .toUpperCase()
 
-    const payload = {
+    const payload: TransactionJSON = {
       Account: address,
       TransactionType: 'SetHook',
       CreateCode: binary,
@@ -73,5 +73,5 @@ api
         })
     })
   })
-  .then(() => {})
+  .then(() => { })
   .catch(console.error)
