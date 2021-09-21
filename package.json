@@ -33,7 +33,8 @@
   },
   "homepage": "https://github.com/XRPL-Hackathon-2021/hooks-liquidity-pool#readme",
   "dependencies": {
-    "@assemblyscript/loader": "^0.19.16"
+    "@assemblyscript/loader": "^0.19.16",
+    "xrpl-client": "^1.9.2"
   },
   "devDependencies": {
     "@types/node": "^16.9.4",
