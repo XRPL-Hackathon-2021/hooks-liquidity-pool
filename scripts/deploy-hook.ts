@@ -44,6 +44,7 @@ const main = async (): Promise<void> => {
   }
   const result = await client.send(request)
   console.log(result)
+  process.exit(1)
 }
 
 main()

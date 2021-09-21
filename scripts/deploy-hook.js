@@ -85,6 +85,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
             case 1:
                 result = _a.sent();
                 console.log(result);
+                process.exit(1);
                 return [2 /*return*/];
         }
     });
