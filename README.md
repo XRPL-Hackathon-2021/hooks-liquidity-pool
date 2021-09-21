@@ -13,11 +13,19 @@ To get setup be sure you have docker installed.
 
 **_Note:_** If these instructions are not enough submit an issue to this repo for more clarification also links to additional documentation is at the bottom of this README.
 
+1. After cloning this repo be sure to run `npm install` from the root of this repo on your local development machine.
+1. <a href="https://www.typescriptlang.org/download" target="_blank">Install typescript</a>.
 1. <a href="https://docs.docker.com/get-docker/" target="_blank">Install docker</a> and confirm it's running.
 1. Pull the docker image that has XRPL Hooks setup within it.
 
    ```
    docker pull xrpllabsofficial/xrpld-hooks-testnet
+   ```
+
+1. Start the container.
+
+   ```
+   docker run -p 127.0.0.1:6005:6005/tcp -p 127.0.0.1:5005:5005/tcp -d --name xrpld-hooks xrpllabsofficial/xrpld-hooks-testnet
    ```
 
 1. Open a shell on the container to execute commands on.
@@ -39,14 +47,16 @@ To get setup be sure you have docker installed.
    # For now this is just a place to keep these keys but in the future
    #   this might be pulled in by the env module of AssemblyScript
    #   or used during deployment of the hook.
-
-   address: rJFbDorCYPpL6Xn9MMpNShLcXaDghrNQPE
-   secret: sntFyFH7NhHPjVY1E3T3wGJgTQPVt
+   XRP_ADDRESS=rKnZEHRiT8k4CXERshnvSSrq9xLjxUcRuE
+   XRP_SECRET=shLFAePb8kjyVAPdnjssDv69E4pcD
+   XRPL_HOST=localhost
+   XRPL_PORT=6005
    ```
 
 1. Develop your hook.
+1. Run `npm run asbuild` to compile your hook.
 1. Unit test your hook.
-1. Run `bin/deploy-hook.js` to deploy the hook to the XRPL Labs Testnet.
+1. Run `npm run deploy` to deploy the hook to the XRPL Labs Testnet.
 1. Integration test your hook.
 1. Enjoy.
 
