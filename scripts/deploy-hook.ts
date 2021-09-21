@@ -17,7 +17,7 @@ const address = process.env.XRP_ADDRESS
 const secret = process.env.XRP_SECRET
 
 // Guard against initialization failures.
-if (!api) throw Error('Is your XRPL server running? Or its config incorrect.')
+if (!api) throw Error('Is your XRPL server running? Or its config incorrect?')
 if (!address) throw Error('XRP_ADDRESS environment variable must be set.')
 if (!secret) throw Error('XRP_SECRET environment variable must be set.')
 
