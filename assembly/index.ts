@@ -10,7 +10,7 @@ export function cbak(reserved: i64): i64 {
 }
 
 export function hook(reserved: i64): i64 {
-  const message = 'Test Message'
+  const message = 'Hello World'
   TRACE(message, message.length * 2, message, message.length * 2, 0)
   GUARD(1, 1)
   return 42

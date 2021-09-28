@@ -51,13 +51,15 @@ To get setup be sure you have docker installed.
    XRP_SECRET=shLFAePb8kjyVAPdnjssDv69E4pcD
    XRPL_HOST=localhost
    XRPL_PORT=6005
+   SENDER_ADDRESS=rnYdsuK9f7vVBhFhVzPB7s8APuf9C6QrAN
+   SENDER_SECRET=sn7Q8W8Yo5ygm3EZTNXWjZw5npjgi
    ```
 
 1. Develop your hook.
 1. Run `npm run asbuild` to compile your hook.
 1. Unit test your hook.
 1. Run `npm run deploy` to deploy the hook to the XRPL Labs Testnet.
-1. Integration test your hook.
+1. Integration test your hook. You can trigger it using `npm run trigger`. You should see the results in the log files inside of the docker container.
 1. Enjoy.
 
 ## Updating Deployment Script
