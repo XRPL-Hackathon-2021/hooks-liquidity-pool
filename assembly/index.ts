@@ -26,7 +26,7 @@ declare function accept(read_ptr: string, read_len: i32, error_code: i64): i64
  * @return Will never return, terminates the hook.
  */
 @external('env', 'rollback')
-declare function rollback(read_ptr: i32, read_len: i32, error_code: i64): i64
+declare function rollback(read_ptr: string, read_len: i32, error_code: i64): i64
 
 /**
  * Read a 20 byte account-id from the memory pointed to by read_ptr of length read_len and encode it to a base58-check
@@ -305,7 +305,7 @@ declare function trace(mread_ptr: string, mread_len: i32, dread_ptr: string, dre
  * @return A negative value on error
  */
 @external('env', 'trace_num')
-declare function trace_num(read_ptr: i32, read_len: i32, number: i64): i64
+declare function trace_num(read_ptr: string, read_len: string, number: i64): i64
 
 /**
  * Retrieve the burden of the originating transaction (if any)
