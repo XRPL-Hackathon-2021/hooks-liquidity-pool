@@ -12,7 +12,8 @@
     "asbuild:optimized": "asc assembly/index.ts --target release",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
     "predeploy": "tsc scripts/deploy-hook.ts",
-    "deploy": "node scripts/deploy-hook.js"
+    "deploy": "node scripts/deploy-hook.js",
+    "trigger": "node scripts/trigger-hook.ts"
   },
   "repository": {
     "type": "git",
