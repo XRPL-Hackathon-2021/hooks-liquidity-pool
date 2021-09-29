@@ -1,4 +1,4 @@
- import { AssemblyScript } from 'xrpl-hooks-api-assembly-script'
+import { _g, trace, accept } from '../node_modules/xrpl-hooks-api-assembly-script/dist'
 
 export function cbak(reserved: i64): i64 {
   return 0
