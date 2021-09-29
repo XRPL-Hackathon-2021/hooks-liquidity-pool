@@ -9,7 +9,7 @@ export function cbak(reserved: i64): i64 {
 }
 
 @external('env', '_g')
-declare function _g(id: i32, maxiter: i32): void
+declare function _g(id: i32, maxiter: i32): i32
 
 @external('env', 'accept')
 declare function accept(read_ptr: string, read_len: i32, error_code: i64): i64
@@ -26,7 +26,7 @@ export function hook(reserved: i64): i64 {
   //   trace(t, t.length * 2, t, t.length * 2, 0)
   // }
   
-  // accept(t, t.length * 2, 0)
+  accept(t, t.length * 2, 0)
 
   return 0
 }
