@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv'
-import { RippleAPI, TransactionJSON } from 'ripple-lib'
+import { XrplClient, AnyJson } from 'xrpl-client'
 
 dotenv.config()
 
@@ -8,51 +8,38 @@ const port = process.env.XRPL_PORT
 const senderAddress = process.env.SENDER_ADDRESS
 const senderSecret = process.env.SENDER_SECRET
 const recipient = process.env.XRP_ADDRESS
-const api = new RippleAPI({ server: `ws://${host}:${port}/` })
+const client = new XrplClient([`ws://${host}:${port}/`])
 
 // Guard against initialization failures.
-if (!api) throw Error('Is your XRPL server running? Its config incorrect?')
+if (!client) throw Error('Is your XRPL server running? Its config incorrect?')
 if (!senderAddress) throw Error('SENDER_ADDRESS env variable must be set.')
 if (!senderSecret) throw Error('SENDER_SECRET env variable must be set.')
 if (!recipient) throw Error('XRP_ADDRESS env variable must be set.')
 
-interface PaymentPayload {
-  Account: string
-  TransactionType: string
-  Amount: {
-    value: string
-    issuer?: string
-    currency?: string
-  }
-  Destination: string
-}
-
 const payload = {
-  Account: senderAddress,
   TransactionType: 'Payment',
-  Amount: { value: '10' },
-  Destination: recipient
+  Account: senderAddress,
+  Destination: recipient,
+  Amount: '1'
 }
 
-const signTransaction = async (payload: PaymentPayload): Promise<any> => {
+/*
+  Caution here: You would never send your secret to an XRPL server in production.
+  This is only needed for the hackathon. The current versions of the 
+  XRPL client libs don't support a SetHook transaction type. 
+  */
+const signTransaction = async (payload: AnyJson): Promise<AnyJson> => {
   // Construct a signing request that includes the payload.
-  const request = `{
-    "id": "trigger-hook-signing-request",
-    "command": "sign",
-    "tx_json": {
-      "Account": "${senderAddress}",
-      "TransactionType": "Payment",
-      "Amount": "10",
-      "Destination": "${recipient}"
-    },
-    "secret": "${senderSecret}"
-  }`
-
-  console.log(request)
+  const request = {
+    id: 'hackathon-payment',
+    command: 'sign',
+    tx_json: payload,
+    secret: senderSecret
+  }
 
   console.log('Signing payment request.')
-  const result = await api.sign(request)
-  console.log(`Locally Signed Transaction Payload: `)
+  const result = await client.send(request)
+  console.log(`Signed transaction returned from XRPL: `)
   console.log(result) // Uncomment to see the signing response.
 
   return result
@@ -62,19 +49,18 @@ const main = async (): Promise<void> => {
   // Get the payload signed by the XRPL.
   const signedTransaction = await signTransaction(payload)
 
-  /*
   // Construct new request that includes the signed payload.
   const request = {
-    id: 'trigger-hook-submission',
+    id: 'hackathon-payment',
     command: 'submit',
     tx_blob: signedTransaction.tx_blob
   }
 
-  console.log('Triggering the hook.')
+  console.log('Sending payment to the XRPL.')
   const result = await client.send(request)
   console.log(`Payment submission result returned from XRPL: `)
   console.log(result) // Uncomment to see the deployment response.
-  */
+
   process.exit(1)
 }
 

@@ -36,20 +36,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-/*
-  This is a placeholder Javascript file.
-  It's purpose is to use RippleLib to install hooks on the testnet.
-
-  This file should use a .env file that you setup during the README.md.
-*/
 var dotenv = require("dotenv");
-// import { RippleAPI, TransactionJSON } from 'ripple-lib'
 var xrpl_client_1 = require("xrpl-client");
 var fs = require("fs");
 dotenv.config();
 var host = process.env.XRPL_HOST;
 var port = process.env.XRPL_PORT;
-// const api = new RippleAPI({ server: `ws://${host}:${port}/` })
 var address = process.env.XRP_ADDRESS;
 var secret = process.env.XRP_SECRET;
 var client = new xrpl_client_1.XrplClient(["ws://" + host + ":" + port + "/"]);

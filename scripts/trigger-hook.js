@@ -37,16 +37,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var dotenv = require("dotenv");
-var ripple_lib_1 = require("ripple-lib");
+var xrpl_client_1 = require("xrpl-client");
 dotenv.config();
 var host = process.env.XRPL_HOST;
 var port = process.env.XRPL_PORT;
 var senderAddress = process.env.SENDER_ADDRESS;
 var senderSecret = process.env.SENDER_SECRET;
 var recipient = process.env.XRP_ADDRESS;
-var api = new ripple_lib_1.RippleAPI({ server: "ws://" + host + ":" + port + "/" });
+var client = new xrpl_client_1.XrplClient(["ws://" + host + ":" + port + "/"]);
 // Guard against initialization failures.
-if (!api)
+if (!client)
     throw Error('Is your XRPL server running? Its config incorrect?');
 if (!senderAddress)
     throw Error('SENDER_ADDRESS env variable must be set.');
@@ -55,62 +55,57 @@ if (!senderSecret)
 if (!recipient)
     throw Error('XRP_ADDRESS env variable must be set.');
 var payload = {
-    Account: senderAddress,
     TransactionType: 'Payment',
-    Amount: { value: '10' },
-    Destination: recipient
+    Account: senderAddress,
+    Destination: recipient,
+    Amount: '1'
 };
+/*
+  Caution here: You would never send your secret to an XRPL server in production.
+  This is only needed for the hackathon. The current versions of the
+  XRPL client libs don't support a SetHook transaction type.
+  */
 var signTransaction = function (payload) { return __awaiter(void 0, void 0, void 0, function () {
     var request, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                request = "{\n    \"id\": \"trigger-hook-signing-request\",\n    \"command\": \"Sign\",\n    \"tx_json\": {\n      \"Account\": \"" + senderAddress + "\",\n      \"TransactionType\": \"Payment\",\n      \"Amount\": \"10\",\n      \"Destination\": \"" + recipient + "\"\n    },\n    \"secret\": \"" + senderSecret + "\"\n  }";
-                console.log(request);
+                request = {
+                    id: 'hackathon-payment',
+                    command: 'sign',
+                    tx_json: payload,
+                    secret: senderSecret
+                };
                 console.log('Signing payment request.');
-                return [4 /*yield*/, api.sign(request)];
+                return [4 /*yield*/, client.send(request)];
             case 1:
                 result = _a.sent();
-                console.log("Locally Signed Transaction Payload: ");
+                console.log("Signed transaction returned from XRPL: ");
                 console.log(result); // Uncomment to see the signing response.
                 return [2 /*return*/, result];
         }
     });
 }); };
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var signedTransaction;
+    var signedTransaction, request, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, signTransaction(payload)
-                /*
                 // Construct new request that includes the signed payload.
-                const request = {
-                  id: 'trigger-hook-submission',
-                  command: 'submit',
-                  tx_blob: signedTransaction.tx_blob
-                }
-              
-                console.log('Triggering the hook.')
-                const result = await client.send(request)
-                console.log(`Payment submission result returned from XRPL: `)
-                console.log(result) // Uncomment to see the deployment response.
-                */
             ];
             case 1:
                 signedTransaction = _a.sent();
-                /*
-                // Construct new request that includes the signed payload.
-                const request = {
-                  id: 'trigger-hook-submission',
-                  command: 'submit',
-                  tx_blob: signedTransaction.tx_blob
-                }
-              
-                console.log('Triggering the hook.')
-                const result = await client.send(request)
-                console.log(`Payment submission result returned from XRPL: `)
-                console.log(result) // Uncomment to see the deployment response.
-                */
+                request = {
+                    id: 'hackathon-payment',
+                    command: 'submit',
+                    tx_blob: signedTransaction.tx_blob
+                };
+                console.log('Sending payment to the XRPL.');
+                return [4 /*yield*/, client.send(request)];
+            case 2:
+                result = _a.sent();
+                console.log("Payment submission result returned from XRPL: ");
+                console.log(result); // Uncomment to see the deployment response.
                 process.exit(1);
                 return [2 /*return*/];
         }

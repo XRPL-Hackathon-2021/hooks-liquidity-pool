@@ -43,6 +43,6 @@
     "assemblyscript": "^0.19.16",
     "dotenv": "^10.0.0",
     "ripple-lib": "^1.10.0",
-    "xrpl-hooks-api-assembly-script": "^0.2.5"
+    "xrpl-hooks-api-assembly-script": "^0.2.9"
   }
 }
